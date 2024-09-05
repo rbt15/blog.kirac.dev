@@ -105,7 +105,7 @@ Here, we have configured our WebClient to throw a `PostClientException` whenever
 
 ## Conclusion
 
-In this post, we've delved into the world of declarative HTTP clients using Spring WebClient and Kotlin. We've seen how to define an interface that defines the HTTP endpoints of a service and how to consume those endpoints in a service class. We've also seen how to configure the underlying WebClient and how to handle errors in our declarative HTTP client. I hope you found this post useful and that it helps you build better applications with Spring WebClient and Kotlin.
+In this post, we've dived into the world of declarative HTTP clients using Spring WebClient and Kotlin. We've seen how to define an interface that defines the HTTP endpoints of a service and how to consume those endpoints in a service class. We've also seen how to configure the underlying WebClient and how to handle errors in our declarative HTTP client. I hope you found this post useful and that it helps you build better applications with Spring WebClient and Kotlin.
 
 Thanks for reading!
 

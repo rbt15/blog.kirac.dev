@@ -7,6 +7,7 @@ export const SITE: Site = {
   title: "blog.kirac.dev",
   lightAndDarkMode: true,
   postPerPage: 10,
+  postPerIndex: 4
 };
 
 export const LOCALE = {
@@ -24,7 +25,7 @@ export const LOGO_IMAGE = {
 export const SOCIALS: SocialObjects = [
   {
     name: "Github",
-    href: "https://github.com/rbt/15",
+    href: "https://github.com/rbt15",
     linkTitle: `Me on Github`,
     active: true,
   },

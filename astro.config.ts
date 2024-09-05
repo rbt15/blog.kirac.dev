@@ -27,7 +27,8 @@ export default defineConfig({
       ],
     ],
     shikiConfig: {
-      theme: "dracula",
+      // For more themes, visit https://shiki.style/themes
+      themes: { light: "min-light", dark: "night-owl" },
       wrap: true,
     },
   },
@@ -37,4 +38,7 @@ export default defineConfig({
     },
   },
   scopedStyleStrategy: "where",
+  experimental: {
+    contentLayer: true,
+  },
 });
