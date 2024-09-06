@@ -7,7 +7,8 @@ export const SITE: Site = {
   title: "blog.kirac.dev",
   lightAndDarkMode: true,
   postPerPage: 10,
-  postPerIndex: 4
+  postPerIndex: 4,
+  scheduledPostMargin: 15 * 60 * 1000, // 15 minutes
 };
 
 export const LOCALE = {

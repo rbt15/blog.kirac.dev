@@ -2,7 +2,7 @@
 title: Declarative Http Clients using Spring WebClient & Kotlin
 author: Kıraç Acar Apaydın
 pubDatetime: 2024-01-04T21:15:33.495Z
-featured: false
+featured: true
 draft: false
 tags:
   - Kotlin
