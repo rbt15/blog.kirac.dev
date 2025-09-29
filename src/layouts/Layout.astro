@@ -1,9 +1,8 @@
 ---
-import { LOCALE, SITE } from "@config";
-import "@styles/base.css";
-import { ViewTransitions } from "astro:transitions";
-
-const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
+import { ClientRouter } from "astro:transitions";
+import { PUBLIC_GOOGLE_SITE_VERIFICATION } from "astro:env/client";
+import { SITE } from "@/config";
+import "@/styles/global.css";
 
 export interface Props {
   title?: string;
@@ -22,17 +21,14 @@ const {
   author = SITE.author,
   profile = SITE.profile,
   description = SITE.desc,
-  ogImage = SITE.ogImage,
-  canonicalURL = new URL(Astro.url.pathname, Astro.site).href,
+  ogImage = SITE.ogImage ? `/${SITE.ogImage}` : "/og.png",
+  canonicalURL = new URL(Astro.url.pathname, Astro.url),
   pubDatetime,
   modDatetime,
   scrollSmooth = false,
 } = Astro.props;
 
-const socialImageURL = new URL(
-  ogImage ?? SITE.ogImage ?? "og.png",
-  Astro.url.origin
-).href;
+const socialImageURL = new URL(ogImage, Astro.url);
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -45,7 +41,7 @@ const structuredData = {
     {
       "@type": "Person",
       name: `${author}`,
-      url: `${profile}`,
+      ...(profile && { url: profile }),
     },
   ],
 };
@@ -53,7 +49,8 @@ const structuredData = {
 
 <!doctype html>
 <html
-  lang=`${LOCALE.lang ?? "en"}`
+  dir={SITE.dir}
+  lang=`${SITE.lang ?? "en"}`
   class={`${scrollSmooth && "scroll-smooth"}`}
 >
   <head>
@@ -104,15 +101,17 @@ const structuredData = {
     <!-- Google JSON-LD Structured data -->
     <script
       type="application/ld+json"
+      is:inline
       set:html={JSON.stringify(structuredData)}
     />
 
-    <!-- Google Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Enable RSS feed auto-discovery  -->
+    <!-- https://docs.astro.build/en/recipes/rss/#enabling-rss-feed-auto-discovery -->
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap"
-      rel="stylesheet"
+      rel="alternate"
+      type="application/rss+xml"
+      title={SITE.title}
+      href={new URL("rss.xml", Astro.site)}
     />
 
     <meta name="theme-color" content="" />
@@ -121,17 +120,17 @@ const structuredData = {
       // If PUBLIC_GOOGLE_SITE_VERIFICATION is set in the environment variable,
       // include google-site-verification tag in the heading
       // Learn more: https://support.google.com/webmasters/answer/9008080#meta_tag_verification&zippy=%2Chtml-tag
-      googleSiteVerification && (
+      PUBLIC_GOOGLE_SITE_VERIFICATION && (
         <meta
           name="google-site-verification"
-          content={googleSiteVerification}
+          content={PUBLIC_GOOGLE_SITE_VERIFICATION}
         />
       )
     }
 
     <script defer src="https://cloud.umami.is/script.js" data-website-id="3af6bedf-dab2-47c5-b8e6-ad65cbbbb55d"></script>
 
-    <ViewTransitions />
+    <ClientRouter />
 
     <script is:inline src="/toggle-theme.js"></script>
   </head>
@@ -139,3 +138,12 @@ const structuredData = {
     <slot />
   </body>
 </html>
+
+<style>
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
+</style>
